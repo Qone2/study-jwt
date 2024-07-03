@@ -21,21 +21,21 @@ public class JwtUtil {
     // JWT 생성 메서드
     public static String createToken(Map<String, Object> claims) {
         return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
+                .claims(claims)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(SECRET_KEY)
                 .compact();
     }
 
     // JWT 검증 메서드
     public static Claims validateToken(String token) {
         try {
-            return Jwts.parserBuilder()
-                    .setSigningKey(SECRET_KEY)
+            return Jwts.parser()
+                    .verifyWith(SECRET_KEY)
                     .build()
-                    .parseClaimsJws(token)
-                    .getBody();
+                    .parseSignedClaims(token)
+                    .getPayload();
         } catch (SecurityException e) {
             System.out.println("Invalid JWT signature");
             return null;
