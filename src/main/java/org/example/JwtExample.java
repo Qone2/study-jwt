@@ -5,7 +5,7 @@ import io.jsonwebtoken.Claims;
 public class JwtExample {
     public static void main(String[] args) {
         // JWT 생성
-        String token = JwtUtil.createToken("user123");
+        String token = JwtUtil.createToken("subject");
         System.out.println("Generated Token: " + token);
 
         // JWT 검증
@@ -19,3 +19,4 @@ public class JwtExample {
         }
     }
 }
+
